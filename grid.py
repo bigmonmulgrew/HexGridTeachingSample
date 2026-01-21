@@ -213,7 +213,7 @@ class HexGrid:
         if r % 2 == 1:
             x += horizontal_spacing/2 # offset alternate rows
 
-        return int(x + 100), int(y + 100)
+        return int(x + 75), int(y + 100)
 
     def hex_corners(self, center) -> list[(int,int)]:
         """
@@ -254,19 +254,27 @@ class HexGrid:
         """
         Convert a pixel position to approximate grid coordinates.
 
-        This method is intentionally approximate and relies on rounding.
-        It is suitable for demos and interaction, not precise math.
-
-        Parameters:
-            pos (tuple[int, int]): Pixel position (x, y)
-
-        Returns:
-            tuple[int, int]: Approximated grid coordinate (q, r)
+        This is the inverse of hex_to_pixel(), using the same
+        spacing rules and offsets.
         """
         mx, my = pos
         mx -= 100
         my -= 100
 
-        q = (2/3 * mx) / self.size
-        r = (-1/3 * mx + math.sqrt(3)/3 * my) / self.size
-        return round(q), round(r)
+        radius = self.size
+        apothem = math.sqrt(3) / 2 * radius
+
+        horizontal_spacing = 2 * apothem
+        vertical_step = (2 * radius + radius) / 2  # matches y calculation
+
+        # Approximate row
+        r = round(my / vertical_step)
+
+        # Undo row offset
+        if r % 2 == 1:
+            mx -= horizontal_spacing / 2
+
+        # Approximate column
+        q = round(mx / horizontal_spacing)
+
+        return q, r

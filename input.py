@@ -7,21 +7,41 @@ class InputHandler:
         self.grid = grid
         self.selected_type = TileType.PLAYER
         self.drag_start = None
+        self.drag_start_pixel = None
+        self.drag_threshold = 10  # pixels
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
             self.handle_key(event.key)
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            self.drag_start = self.grid.pixel_to_hex(event.pos)
-            self.apply_tile(self.drag_start)
+            # Start tracking a possible click or drag
+            self.drag_start_pixel = event.pos
+            self.drag_start_hex = self.grid.pixel_to_hex(event.pos)
 
         if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            if self.drag_start:
-                drag_end = self.grid.pixel_to_hex(event.pos)
-                if drag_end != self.drag_start:
-                    self.grid.swap_tiles(self.drag_start, drag_end)
-            self.drag_start = None
+            if not self.drag_start_hex:
+                return
+
+            drag_end_hex = self.grid.pixel_to_hex(event.pos)
+
+            # Measure mouse movement distance
+            dx = event.pos[0] - self.drag_start_pixel[0]
+            dy = event.pos[1] - self.drag_start_pixel[1]
+            distance_sq = dx * dx + dy * dy
+
+            if distance_sq < self.drag_threshold * self.drag_threshold:
+                # Treat as a click
+                self.apply_tile(self.drag_start_hex)
+            else:
+                # Treat as a drag
+                if drag_end_hex != self.drag_start_hex:
+                    self.grid.swap_tiles(self.drag_start_hex, drag_end_hex)
+
+            # Reset drag state
+            self.drag_start_hex = None
+            self.drag_start_pixel = None
+
 
     def handle_key(self, key):
         if key == pygame.K_1:
@@ -52,6 +72,23 @@ class InputHandler:
 
     def draw_ui(self, surface):
         font = pygame.font.SysFont(None, 24)
-        text = f"Selected: {self.selected_type.name} (1-4)"
-        label = font.render(text, True, (255, 255, 255))
-        surface.blit(label, (10, 10))
+
+        # --- Top-left: current selection ---
+        selected_text = f"Selected: {self.selected_type.name} (1–4)"
+        selected_label = font.render(selected_text, True, (255, 255, 255))
+        surface.blit(selected_label, (10, 10))
+
+        # --- Bottom: instructions ---
+        instructions = (
+            "Use 1–4 to select tile type. "
+            "Left click to set tile, drag to swap tiles."
+        )
+
+        instruction_label = font.render(instructions, True, (255, 255, 255))
+
+        # Position at bottom with a small margin
+        x = 10
+        y = surface.get_height() - instruction_label.get_height() - 10
+
+        surface.blit(instruction_label, (x, y))
+

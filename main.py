@@ -5,19 +5,21 @@ from input import InputHandler
 # =========================
 # CONFIG (students edit)
 # =========================
-GRID_WIDTH = 8      # How many hex tiles wide
-GRID_HEIGHT = 6     # How many rows wide
+GRID_WIDTH = 16      # How many hex tiles wide
+GRID_HEIGHT = 10     # How many rows wide
 HEX_SIZE = 40       # Size of a hex tile. Radius to a corner
 
-WINDOW_WIDTH = 800
-WINDOW_HEIGHT = 600
+WINDOW_WIDTH = 1200 
+WINDOW_HEIGHT = 800
 FPS = 60
 
 
 def main() -> None:     # Explicit return typing (Optional)
     # Basic setup
     pygame.init()
+    
     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+
     pygame.display.set_caption("Hex Grid Demo")
     clock = pygame.time.Clock()
 
