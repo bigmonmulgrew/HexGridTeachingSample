@@ -5,9 +5,9 @@ from input import InputHandler
 # =========================
 # CONFIG (students edit)
 # =========================
-GRID_WIDTH = 8
-GRID_HEIGHT = 6
-HEX_SIZE = 40
+GRID_WIDTH = 8      # How many hex tiles wide
+GRID_HEIGHT = 6     # How many rows wide
+HEX_SIZE = 40       # Size of a hex tile. Radius to a corner
 
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
