@@ -98,9 +98,18 @@ class HexGrid:
     # Hex math
     # -----------------------
     def hex_to_pixel(self, q, r):
-        x = self.size * (3/2 * q) + 100
-        y = self.size * (math.sqrt(3) * (r + q / 2)) + 100
-        return int(x), int(y)
+        hex_height = math.sqrt(3) * self.size
+        hex_width = 2 * self.size
+
+        x = q * (1.5 * self.size)
+        y = r * hex_height
+
+        # Offset every odd column
+        if q % 2 == 1:
+            y += hex_height / 2
+
+        # Padding to keep grid on screen
+        return int(x + 100), int(y + 100)
 
     def hex_corners(self, center):
         cx, cy = center
