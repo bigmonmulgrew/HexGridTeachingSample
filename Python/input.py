@@ -7,10 +7,16 @@ class InputHandler:
         self.grid = grid
         self.selected_type = TileType.PLAYER
         self.drag_start = None
+        
+        # State used to decide between click and drag
         self.drag_start_pixel = None
         self.drag_threshold = 10  # pixels
 
     def handle_event(self, event):
+        # Input handling is split into:
+        # - capture intent on mouse down
+        # - resolve action on mouse up
+        
         if event.type == pygame.KEYDOWN:
             self.handle_key(event.key)
 
@@ -31,10 +37,10 @@ class InputHandler:
             distance_sq = dx * dx + dy * dy
 
             if distance_sq < self.drag_threshold * self.drag_threshold:
-                # Treat as a click
+                # Short movement = click
                 self.apply_tile(self.drag_start_hex)
             else:
-                # Treat as a drag
+                # Larger movement = drag
                 if drag_end_hex != self.drag_start_hex:
                     self.grid.swap_tiles(self.drag_start_hex, drag_end_hex)
 
@@ -54,6 +60,8 @@ class InputHandler:
             self.selected_type = TileType.EXIT
 
     def apply_tile(self, coords):
+        # Applies the currently selected tile type, enforcing grid rules
+        
         q, r = coords
         tile = self.grid.get_tile(q, r)
         if not tile:

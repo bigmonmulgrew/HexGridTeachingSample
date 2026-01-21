@@ -66,8 +66,8 @@ class HexGrid:
         self.height = height
         self.size = size
         self.tiles = [
-            [HexTile() for _ in range(height)]
-            for _ in range(width)
+            [HexTile() for _ in range(height)]  # Rows
+            for _ in range(width)               # Columns
         ]
 
     # -----------------------
@@ -200,6 +200,15 @@ class HexGrid:
         Returns:
             tuple[int, int]: Pixel coordinates (x, y)
         """
+        
+        # Geometry definitions:
+        # radius  = centre → corner
+        # apothem = centre → flat side
+        #
+        # Layout choice:
+        # - Pointy-top hexes
+        # - Rows are offset horizontally (odd-r layout)
+        
         radius = self.size
         apothem = math.sqrt(3) / 2 * radius
 
@@ -208,7 +217,7 @@ class HexGrid:
 
         x = q * horizontal_spacing
         y = r * (vertical_spacing + radius)
-        y = y / 2
+        y = y / 2   # compress vertical spacing so hexes interlock edge-to-edge
 
         if r % 2 == 1:
             x += horizontal_spacing/2 # offset alternate rows
@@ -254,8 +263,9 @@ class HexGrid:
         """
         Convert a pixel position to approximate grid coordinates.
 
-        This is the inverse of hex_to_pixel(), using the same
-        spacing rules and offsets.
+        NOTE:
+        This is a simplified inverse mapping intended for interaction,
+        not for precise math or pathfinding.
         """
         mx, my = pos
         mx -= 100

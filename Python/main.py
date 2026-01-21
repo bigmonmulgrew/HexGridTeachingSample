@@ -1,3 +1,13 @@
+"""
+Hex Grid Demo (MVP)
+
+This file acts as the main application entry point.
+Students are expected to:
+- adjust configuration values
+- add gameplay logic
+- NOT modify grid.py or input.py, but feel free to look if you are curious
+"""
+
 import pygame
 from grid import HexGrid, TileType
 from input import InputHandler
@@ -27,10 +37,14 @@ def main() -> None:     # Explicit return typing (Optional)
     grid = HexGrid(GRID_WIDTH, GRID_HEIGHT, HEX_SIZE)
     input_handler = InputHandler(grid)
 
-    # We use a Try block so that when we hit the keyboard CTRL+X we can exit cleanly.
+    # We use a try block so that when we hit the keyboard CTRL+C we can exit cleanly.
     try:
         running = True
-        # Game update loop
+        
+        # Main game loop:
+        # - process input
+        # - update state
+        # - draw frame
         while running:
             clock.tick(FPS)
 
