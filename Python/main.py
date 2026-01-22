@@ -9,7 +9,7 @@ Students are expected to:
 """
 
 import pygame
-from grid import HexGrid, TileType
+from grid import HexGrid
 from input import InputHandler
 
 # =========================

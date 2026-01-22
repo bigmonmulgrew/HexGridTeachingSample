@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2059572726030688821
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3907984782688314184}
+  - component: {fileID: 7202985341133051520}
+  - component: {fileID: 6763600928830604645}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3907984782688314184
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059572726030688821}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7202985341133051520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059572726030688821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94c9d8b982c450448ad2735bae33d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridWidth: 16
+  gridHeight: 10
+  hexSize: 40
+--- !u!114 &6763600928830604645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059572726030688821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f62187c8fff2c74b91555af49b421d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  select1:
+    m_Name: Select 1
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 939d8916-79d8-4cca-919b-76127991a249
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: b746cc51-93c3-4e22-8867-ff51004105d7
+      m_Path: <Keyboard>/1
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Select 1
+      m_Flags: 0
+    m_Flags: 0
+  select2:
+    m_Name: Select 2
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: b1ad13de-fc0e-4284-b575-0819b98104bd
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 5e6da330-29b0-44ab-a143-58c7e0ab44f2
+      m_Path: <Keyboard>/2
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Select 2
+      m_Flags: 0
+    m_Flags: 0
+  select3:
+    m_Name: Select 3
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: b0cd1f8b-f082-4868-96b7-619c4d1b000e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: bf278fe2-1684-4c7d-97d8-178be411a81e
+      m_Path: <Keyboard>/3
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Select 3
+      m_Flags: 0
+    m_Flags: 0
+  select4:
+    m_Name: Select 4
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: c97ae5fb-3285-4ca5-8a4b-24efd3e591f6
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 58f3a43f-7306-4898-89e6-6d810919a85c
+      m_Path: <Keyboard>/4
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Select 4
+      m_Flags: 0
+    m_Flags: 0
+  primaryClick:
+    m_Name: Primary Click
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: ebe72d84-1415-43a4-b667-70b9d1615e6b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: acd6493c-7ed4-4611-b4c9-a0e44d12942b
+      m_Path: <Mouse>/leftButton
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Primary Click
+      m_Flags: 0
+    m_Flags: 0
+  pointerPosition:
+    m_Name: Pointer Position
+    m_Type: 0
+    m_ExpectedControlType: Vector2
+    m_Id: 80c89aec-52d8-4666-8874-813219995b59
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 1f1737d9-e9ef-4632-b146-8897035da94a
+      m_Path: <Mouse>/position
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Pointer Position
+      m_Flags: 0
+    m_Flags: 0
