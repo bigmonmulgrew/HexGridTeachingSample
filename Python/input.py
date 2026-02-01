@@ -86,7 +86,7 @@ class InputHandler:
         selected_label = font.render(selected_text, True, (255, 255, 255))
         surface.blit(selected_label, (10, 10))
 
-        # --- Bottom: instructions ---
+        # --- Bottom: instructions --- TODO this is a constant so should be moved to a constant.
         instructions = (
             "Use 1–4 to select tile type. "
             "Left click to set tile, drag to swap tiles."

@@ -81,14 +81,24 @@ class InputHandler
 
     public void DrawUI()
     {
+        string selectedMsg = $"Selected: {selectedType} (1-4)";
         Raylib.DrawText(
-            $"Selected: {selectedType} (1–4)",
-            10, 10, 20, Color.White
+            selectedMsg,    // Message string
+            10,             // X position (Horizontal)
+            10,             // Y position (Vertical)
+            20,             // Font size
+            Color.White     // Colour
         );
 
+        string instructions = $"Use 1-4 to select tile type. Left click to set tile, drag to swap tiles.";
+        
+
         Raylib.DrawText(
-            "Left click to place, drag to swap",
-            10, Raylib.GetScreenHeight() - 30, 20, Color.White
+            instructions,                   // Message string
+            10,                             // X position (Horizontal)
+            Raylib.GetScreenHeight() - 30,  // Y position (Vertical)
+            20,                             // Font size
+            Color.White                     // Colour
         );
     }
 }
