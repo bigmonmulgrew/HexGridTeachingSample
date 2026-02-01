@@ -1,50 +1,54 @@
-﻿using System;
-using System.Threading;
+﻿using Raylib_cs;
+using System.Numerics;
 
+/// <summary>
+/// Application entry point.
+/// Mirrors the structure of main.py in the pygame version.
+/// </summary>
 class Program
 {
     // =========================
     // CONFIG (students edit)
     // =========================
-    const int GRID_WIDTH = 8;
-    const int GRID_HEIGHT = 6;
-    const int FPS = 10;
+    const int GRID_WIDTH = 16;
+    const int GRID_HEIGHT = 10;
+    const int HEX_SIZE = 40;
+
+    const int WINDOW_WIDTH = 1200;
+    const int WINDOW_HEIGHT = 800;
+    const int FPS = 60;
 
     static void Main()
     {
-        Console.CursorVisible = false;
+        // --- Window setup ---
+        Raylib.InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Hex Grid Demo (Raylib)");
+        Raylib.SetTargetFPS(FPS);
 
-        HexGrid grid = new HexGrid(GRID_WIDTH, GRID_HEIGHT);
+        // --- Core objects ---
+        HexGrid grid = new HexGrid(GRID_WIDTH, GRID_HEIGHT, HEX_SIZE);
         InputHandler input = new InputHandler(grid);
 
-        bool running = true;
-
-        try
+        // --- Main loop ---
+        while (!Raylib.WindowShouldClose())
         {
-            while (running)
-            {
-                // ---- INPUT ----
-                if (Console.KeyAvailable)
-                {
-                    var key = Console.ReadKey(true);
-                    running = input.HandleKey(key);
-                }
+            // -----------------
+            // INPUT
+            // -----------------
+            input.Update();
 
-                // ---- DRAW ----
-                Console.Clear();
-                grid.Draw();
-                input.DrawUI();
+            // -----------------
+            // DRAW
+            // -----------------
+            Raylib.BeginDrawing();
+            Raylib.ClearBackground(Color.DarkGray);
 
-                Thread.Sleep(1000 / FPS);
-            }
+            grid.Draw();
+            input.DrawUI();
+
+            Raylib.EndDrawing();
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-        finally
-        {
-            Console.CursorVisible = true;
-        }
+
+        // --- Cleanup ---
+        Raylib.CloseWindow();
     }
 }

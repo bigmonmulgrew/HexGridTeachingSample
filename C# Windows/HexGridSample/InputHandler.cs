@@ -1,49 +1,57 @@
-﻿using System;
+﻿using Raylib_cs;
+using System.Numerics;
 
+/// <summary>
+/// Handles keyboard and mouse input.
+/// Mirrors input.py behaviour.
+/// </summary>
 class InputHandler
 {
     private readonly HexGrid grid;
     private TileType selectedType = TileType.PLAYER;
+
+    private (int q, int r)? dragStart;
+    private Vector2 dragStartPixel;
+    private const float DragThreshold = 10f;
 
     public InputHandler(HexGrid grid)
     {
         this.grid = grid;
     }
 
-    public bool HandleKey(ConsoleKeyInfo key)
+    public void Update()
     {
-        switch (key.Key)
+        // --- Key input ---
+        if (Raylib.IsKeyPressed(KeyboardKey.One)) selectedType = TileType.PLAYER;
+        if (Raylib.IsKeyPressed(KeyboardKey.Two)) selectedType = TileType.ENEMY;
+        if (Raylib.IsKeyPressed(KeyboardKey.Three)) selectedType = TileType.OBSTACLE;
+        if (Raylib.IsKeyPressed(KeyboardKey.Four)) selectedType = TileType.EXIT;
+
+        // --- Mouse input ---
+        if (Raylib.IsMouseButtonPressed(MouseButton.Left))
         {
-            case ConsoleKey.D1: selectedType = TileType.PLAYER; break;
-            case ConsoleKey.D2: selectedType = TileType.ENEMY; break;
-            case ConsoleKey.D3: selectedType = TileType.OBSTACLE; break;
-            case ConsoleKey.D4: selectedType = TileType.EXIT; break;
-
-            case ConsoleKey.T:
-                ApplyTile(ReadCoord());
-                break;
-
-            case ConsoleKey.S:
-                Console.WriteLine("Swap A:");
-                var a = ReadCoord();
-                Console.WriteLine("Swap B:");
-                var b = ReadCoord();
-                grid.SwapTiles(a, b);
-                break;
-
-            case ConsoleKey.Escape:
-                return false;
+            dragStartPixel = Raylib.GetMousePosition();
+            dragStart = grid.PixelToHex(dragStartPixel);
         }
-        return true;
-    }
 
-    private (int q, int r) ReadCoord()
-    {
-        Console.Write("q: ");
-        int q = int.Parse(Console.ReadLine());
-        Console.Write("r: ");
-        int r = int.Parse(Console.ReadLine());
-        return (q, r);
+        if (Raylib.IsMouseButtonReleased(MouseButton.Left) && dragStart.HasValue)
+        {
+            Vector2 endPixel = Raylib.GetMousePosition();
+            var endHex = grid.PixelToHex(endPixel);
+
+            float distance = Vector2.Distance(dragStartPixel, endPixel);
+
+            if (distance < DragThreshold)
+            {
+                ApplyTile(dragStart.Value);
+            }
+            else if (endHex != dragStart.Value)
+            { 
+                grid.SwapTiles(dragStart.Value, endHex); 
+            }
+
+            dragStart = null;
+        }
     }
 
     private void ApplyTile((int q, int r) c)
@@ -54,9 +62,13 @@ class InputHandler
         if (selectedType == TileType.EXIT)
         {
             if (tile.Type == TileType.EXIT)
+            {
                 tile.Type = TileType.EMPTY;
+            }
             else
+            {
                 grid.SetTile(c.q, c.r, TileType.EXIT);
+            }
         }
         else
         {
@@ -69,10 +81,14 @@ class InputHandler
 
     public void DrawUI()
     {
-        Console.WriteLine();
-        Console.WriteLine($"Selected: {selectedType} (1–4)");
-        Console.WriteLine("T = place tile");
-        Console.WriteLine("S = swap tiles");
-        Console.WriteLine("ESC = quit");
+        Raylib.DrawText(
+            $"Selected: {selectedType} (1–4)",
+            10, 10, 20, Color.White
+        );
+
+        Raylib.DrawText(
+            "Left click to place, drag to swap",
+            10, Raylib.GetScreenHeight() - 30, 20, Color.White
+        );
     }
 }
