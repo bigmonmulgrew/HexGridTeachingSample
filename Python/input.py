@@ -34,9 +34,9 @@ class InputHandler:
             # Measure mouse movement distance
             dx = event.pos[0] - self.drag_start_pixel[0]
             dy = event.pos[1] - self.drag_start_pixel[1]
-            distance_sq = dx * dx + dy * dy
+            distance_sq = dx * dx + dy * dy         # Using distance squared to avoid negatives
 
-            if distance_sq < self.drag_threshold * self.drag_threshold:
+            if distance_sq < self.drag_threshold * self.drag_threshold:     # Squaring drag threshold to scale with distance squared.
                 # Short movement = click
                 self.apply_tile(self.drag_start_hex)
             else:

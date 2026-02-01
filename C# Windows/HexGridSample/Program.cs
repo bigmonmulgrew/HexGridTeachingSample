@@ -3,7 +3,11 @@ using System.Numerics;
 
 /// <summary>
 /// Application entry point.
-/// Mirrors the structure of main.py in the pygame version.
+/// Mirrors the structure of main.py in the pygame version.<br></br>
+/// Students are expected to: <br></br>
+///  - adjust configuration values<br></br>
+///  - add gameplay logic<br></br>
+///  - NOT modify grid.py or input.py, but feel free to look if you are curious
 /// </summary>
 class Program
 {
@@ -34,7 +38,7 @@ class Program
             // -----------------
             // INPUT
             // -----------------
-            input.Update();
+            input.HandleEvent();
 
             // -----------------
             // DRAW
