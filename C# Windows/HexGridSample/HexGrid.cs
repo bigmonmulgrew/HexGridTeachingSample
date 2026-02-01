@@ -19,6 +19,8 @@ enum TileType
     EXIT
 }
 
+
+
 /// <summary>
 /// Simple data container for a hex tile.
 /// <br/><br/>
@@ -39,6 +41,15 @@ class HexTile
 /// </summary>
 class HexGrid
 {
+    Dictionary<TileType, Color> TILE_COLOURS = new()
+{
+    { TileType.EMPTY, Color.RayWhite },
+    { TileType.PLAYER, Color.Red },
+    { TileType.ENEMY, Color.Green },
+    { TileType.OBSTACLE, Color.Brown },
+    { TileType.EXIT, Color.Yellow }
+};
+
     private readonly int width;
     private readonly int height;
     private readonly int size;
@@ -70,7 +81,7 @@ class HexGrid
 
     public void SetTile(int q, int r, TileType type)
     {
-        var tile = GetTile(q, r);
+        HexTile tile = GetTile(q, r);
         if (tile == null) return;
 
         if (type == TileType.EXIT)
@@ -88,7 +99,7 @@ class HexGrid
 
     private void ClearExit()
     {
-        foreach (var tile in tiles)
+        foreach (HexTile tile in tiles)
         {
             if (tile.Type == TileType.EXIT)
             {
@@ -134,21 +145,17 @@ class HexGrid
 
     private void DrawHex(Vector2 center, HexTile tile)
     {
-        Color colour = tile.Type switch
-        {
-            TileType.PLAYER => Color.Red,
-            TileType.ENEMY => Color.Green,
-            TileType.OBSTACLE => Color.Brown,
-            _ => Color.RayWhite
-        };
+        Vector2[] corners = HexCorners(center);
+        Color colour = TILE_COLOURS[tile.Type];
 
-        Vector2[] points = HexCorners(center);
+        // Fan layout: centre + all outer points + repeat first outer point
+        Vector2[] fan = new Vector2[3];
 
-        Raylib.DrawTriangleFan(points, points.Length, colour);
+        Raylib.DrawPoly(center, 6, size, 30, colour);
 
         for (int i = 0; i < 6; i++)
         {
-            Raylib.DrawLineV(points[i], points[(i + 1) % 6], Color.Black);
+            Raylib.DrawLineV(corners[i], corners[(i + 1) % 6], Color.Black);
         }
 
         if (tile.Type == TileType.EXIT)

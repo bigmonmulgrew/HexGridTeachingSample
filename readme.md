@@ -30,7 +30,7 @@ Currently included (or planned):
 
 - **Python / Pygame**
 - **Unity / C#**
-- **C# Standalone** *(coming soon)*
+- **C# Standalone**
 
 Each framework has its **own folder**, containing:
 - A self-contained project

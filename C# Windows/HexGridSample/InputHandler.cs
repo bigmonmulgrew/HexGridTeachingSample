@@ -79,7 +79,7 @@ class InputHandler
     {
         (int q, int r) = coords;
 
-        var tile = grid.GetTile(q, r);
+        HexTile tile = grid.GetTile(q, r);
         if (tile == null) return;
 
         if (selectedType == TileType.EXIT)
