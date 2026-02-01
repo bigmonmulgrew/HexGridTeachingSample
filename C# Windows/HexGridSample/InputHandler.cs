@@ -30,7 +30,7 @@ class InputHandler
 
         
         // --- Mouse input ---
-        if (Raylib.IsMouseButtonDown(MouseButton.Left))
+        if (Raylib.IsMouseButtonPressed(MouseButton.Left))
         {
             dragStartPixel = Raylib.GetMousePosition();
             dragStartHex = grid.PixelToHex(dragStartPixel);
